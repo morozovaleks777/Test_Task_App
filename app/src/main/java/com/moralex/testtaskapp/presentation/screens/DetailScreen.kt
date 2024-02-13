@@ -14,7 +14,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,7 +27,7 @@ import androidx.navigation.NavHostController
 @Composable
 fun DetailScreen(navController: NavHostController, factText: String) {
     Scaffold(
-        modifier = Modifier,
+        modifier = Modifier.padding(0.dp),
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = MaterialTheme.colorScheme.onPrimary,
         topBar = {
@@ -49,11 +48,12 @@ fun DetailScreen(navController: NavHostController, factText: String) {
                 }
             )
         },
-        content = {it
+        content = {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Transparent)
+                    .padding(it)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally

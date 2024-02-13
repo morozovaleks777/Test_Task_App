@@ -61,7 +61,7 @@ class MainViewModel @Inject constructor(
 
     fun getNumberFactById(id: Long): StateFlow<NumberFactEntity?> {
 
-        viewModelScope.launch(Dispatchers.IO ){
+        viewModelScope.launch(Dispatchers.IO) {
             getNumberFactByIdUseCase.execute(id).collect { fact ->
                 factFlow.value = fact
             }

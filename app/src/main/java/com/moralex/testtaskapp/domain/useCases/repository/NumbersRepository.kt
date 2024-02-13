@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import okhttp3.ResponseBody
 
 interface NumbersRepository {
-     suspend fun getMyNumberDescribing(number: String?): Flow<Result<ResponseBody>>
-     suspend fun getRandomNumberDescribing(): Flow<Result<ResponseBody>>
+    suspend fun getMyNumberDescribing(number: String?): Flow<Result<ResponseBody>>
+    suspend fun getRandomNumberDescribing(): Flow<Result<ResponseBody>>
 }
 

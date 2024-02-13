@@ -1,16 +1,11 @@
 package com.moralex.testtaskapp.presentation.navigation
 
-//import com.example.barnassistant.presentation.screens.channel_list_screen.ChannelListScreen
+
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.ExperimentalFoundationApi
-
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,15 +29,17 @@ private const val ANIMATION_SPEED = 900
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController,
-        startDestination = AppScreens.SplashScreen.name ){
-       composableAnimated(AppScreens.SplashScreen.name) {
-          SplashScreen(navController = navController)
+    NavHost(
+        navController = navController,
+        startDestination = AppScreens.SplashScreen.name
+    ) {
+        composableAnimated(AppScreens.SplashScreen.name) {
+            SplashScreen(navController = navController)
         }
         composableAnimated(AppScreens.MainScreen.name) {
             val viewModel = hiltViewModel<MainViewModel>()
 
-            MainScreen(navController = navController,viewModel)
+            MainScreen(navController = navController, viewModel)
         }
         composableAnimated(
             route = "${AppScreens.DetailScreen.name}?text={factText}",
@@ -86,14 +83,5 @@ object Transitions {
             animationSpec = tween(ANIMATION_SPEED)
         )
     }
-    val FADE_IN: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition? = {
-        fadeIn(
-            animationSpec = tween(ANIMATION_SPEED)
-        )
-    }
-    val FADE_OUT: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition? = {
-        fadeOut(
-            animationSpec = tween(ANIMATION_SPEED)
-        )
-    }
+
 }

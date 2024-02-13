@@ -10,14 +10,14 @@ import javax.inject.Inject
 
 class NumbersRepositoryImpl @Inject constructor(
     private val numbersApiService: NumbersApiService
-): NumbersRepository {
+) : NumbersRepository {
 
     override suspend fun getMyNumberDescribing(number: String?): Flow<Result<ResponseBody>> = flow {
         try {
             val result = numbersApiService.getNumberFact(number)
             emit(Result.success(result))
         } catch (e: Exception) {
-            emit(Result.failure<ResponseBody>(e))
+            emit(Result.failure(e))
         }
     }
 
@@ -27,7 +27,7 @@ class NumbersRepositoryImpl @Inject constructor(
             val result = numbersApiService.getRandomNumberFact()
             emit(Result.success(result))
         } catch (e: Exception) {
-            emit(Result.failure<ResponseBody>(e))
+            emit(Result.failure(e))
         }
     }
 }
