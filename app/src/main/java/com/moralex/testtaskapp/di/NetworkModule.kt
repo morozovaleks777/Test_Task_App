@@ -1,8 +1,10 @@
 package com.moralex.testtaskapp.di
 
 
-import com.google.gson.*
-import com.moralex.testtaskapp.data.api.NumbersApiService
+import com.moralex.testtaskapp.data.NumbersApiService
+import com.moralex.testtaskapp.data.repositoryImpl.NumbersRepositoryImpl
+import com.moralex.testtaskapp.domain.useCases.repository.NumbersRepository
+import com.moralex.testtaskapp.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,34 +17,33 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-
-
     @Singleton
     @Provides
-    fun provideBaseRetrofitBuilder(httpClient: OkHttpClient): Retrofit.Builder {
+    fun provideRepository(numbersRepositoryImpl: NumbersRepositoryImpl): NumbersRepository {
+        return numbersRepositoryImpl
+    }
+
+    @Provides
+    @Singleton
+    fun provideOpenWeatherApi(): NumbersApiService {
         return Retrofit.Builder()
-            .client(httpClient)
-            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .baseUrl(BASE_URL)
+            .build().create(NumbersApiService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideBaseRetrofit(url: String, builder: Retrofit.Builder): Retrofit {
-        return builder
-            .baseUrl(url)
+    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
             .build()
-    }
-
-
-    @Singleton
-    @Provides
-    fun provideProfileApiService(retrofit: Retrofit): NumbersApiService =
-        retrofit.create( NumbersApiService::class.java)
-
-
 }
