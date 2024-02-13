@@ -1,7 +1,7 @@
 package com.moralex.testtaskapp.data
 
 
-import com.moralex.testtaskapp.data.model.NumberFact
+
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path
